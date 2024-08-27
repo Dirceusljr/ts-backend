@@ -1,13 +1,13 @@
-import express from "express";
+import express, { Response } from "express";
 
 const app = express();
 app.use(express.json());
 
-app.get("/", (_, res) => {
+app.get("/", (_, res:Response) => {
   res.send("Bem vindo ao curso de TypeScript!");
 });
 
-function criaPet(id, nome, especie, idade, adotado) {
+function criaPet(id: Number, nome: String, especie: String, idade: Number, adotado: Boolean) {
   return {
     id,
     nome,
@@ -17,7 +17,7 @@ function criaPet(id, nome, especie, idade, adotado) {
   };
 }
 
-let id = "0";
+let id = 0;
 function geraId() {
   id = id + 1;
   return id;
