@@ -4,13 +4,19 @@ import EnumEspecie from "../enum/EnumEspecie";
 
 const listaPet: TypePet[] = [];
 
+let id = 0;
+function geraId() {
+  id = id + 1;
+  return id;
+}
+
 export default class PetController {
     criaPet(req: Request, res: Response) {
-        const {id, nome, especie, idade, adotado } = <TypePet>req.body;
+        const { nome, especie, dataDeNascimento, adotado } = <TypePet>req.body;
         if(!Object.values(EnumEspecie).includes(especie)) {
             return res.status(400).json({ message: "Espécie inválida." });
         }
-        const novoPet: TypePet = { id, nome, especie, idade, adotado };
+        const novoPet: TypePet = { id: geraId(), nome, especie, dataDeNascimento, adotado };
         listaPet.push(novoPet);
         return res.status(201).json(novoPet);
     }
@@ -21,7 +27,7 @@ export default class PetController {
 
     atualizaPet(req: Request, res: Response) {
         const { id } = req.params;
-        const { nome, especie, adotado, idade } = req.body as TypePet;
+        const { nome, especie, adotado, dataDeNascimento } = req.body as TypePet;
 
         const pet = listaPet.find((pet) => pet.id === Number(id));
         if(!pet) {
@@ -31,7 +37,7 @@ export default class PetController {
         pet.nome = nome;
         pet.especie = especie;
         pet.adotado = adotado;
-        pet.idade = idade;
+        pet.dataDeNascimento = dataDeNascimento;
 
         return res.status(200).json(pet);
     }
