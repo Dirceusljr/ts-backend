@@ -9,8 +9,8 @@ export default class PetRepository implements IPetRepository {
         this.repository = repository;
     }
 
-    criaPet(pet: PetEntity): void {
-        this.repository.save(pet);
+    async criaPet(pet: PetEntity): Promise<void> {
+         await this.repository.save(pet);
     }
 
     async listaPets(): Promise<PetEntity[]> {
@@ -34,8 +34,7 @@ export default class PetRepository implements IPetRepository {
             await this.repository.save(petToUpdate);
 
             return {
-                success: true,
-                message: 'Pet atualizado com sucesso'
+                success: true
             }
 
         } catch (error) {
@@ -63,8 +62,7 @@ export default class PetRepository implements IPetRepository {
 
             await this.repository.remove(petToRemove);
             return {
-                success: true,
-                message: 'Pet deletado com sucesso'
+                success: true
             }
         } catch (error) {
             console.log(error)
