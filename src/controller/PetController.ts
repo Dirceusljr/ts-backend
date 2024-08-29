@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import type TypePet from "../types/TypePet";
 import EnumEspecie from "../enum/EnumEspecie";
+import PetRepository from "../repositories/PetRepository";
 
 const listaPet: TypePet[] = [];
 
@@ -11,13 +12,14 @@ function geraId() {
 }
 
 export default class PetController {
+    constructor(private repository: PetRepository) {}
     criaPet(req: Request, res: Response) {
         const { nome, especie, dataDeNascimento, adotado } = <TypePet>req.body;
         if(!Object.values(EnumEspecie).includes(especie)) {
             return res.status(400).json({ message: "Espécie inválida." });
         }
         const novoPet: TypePet = { id: geraId(), nome, especie, dataDeNascimento, adotado };
-        listaPet.push(novoPet);
+        this.repository.criaPet(novoPet);
         return res.status(201).json(novoPet);
     }
 
