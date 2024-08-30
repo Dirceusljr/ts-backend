@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import EnumEspecie from "../enum/EnumEspecie";
 import PetRepository from "../repositories/PetRepository";
 import PetEntity from "../entities/PetEntity";
+import EnumPorte from "../enum/EnumPorte";
 
 export default class PetController {
     constructor(
@@ -9,17 +10,22 @@ export default class PetController {
     ) { }
 
     async criaPet(req: Request, res: Response) {
-        const { nome, especie, dataDeNascimento, adotado } = <PetEntity>req.body;
+        const { nome, especie, dataDeNascimento, adotado, porte } = <PetEntity>req.body;
 
         if (!Object.values(EnumEspecie).includes(especie)) {
             return res.status(400).json({ message: "Espécie inválida." });
+        }
+
+        if (porte && !(porte in EnumPorte)) {
+            return res.status(400).json({ message: "Porte inválido." });
         }
 
         const novoPet = new PetEntity(
             nome,
             especie,
             dataDeNascimento,
-            adotado
+            adotado,
+            porte
         );
 
         await this.repository.criaPet(novoPet);
@@ -68,5 +74,11 @@ export default class PetController {
             return res.status(404).json({ message })
         }
         return res.sendStatus(204)
+    }
+
+    async buscaPetPeloPorte(req: Request, res: Response) {
+        const { porte } = req.query;
+        const listaDePets = await this.repository.buscaPetPeloPorte(porte as EnumPorte);
+        return res.status(200).json(listaDePets);
     }
 }
