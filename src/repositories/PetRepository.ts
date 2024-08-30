@@ -120,10 +120,10 @@ export default class PetRepository implements IPetRepository {
         }
     }
 
-    async buscaPetPeloPorte(porte: EnumPorte): Promise<PetEntity[]> {
+    async buscaPeloCampoGenerico<T extends keyof PetEntity>(campo: T, valor: PetEntity[T]): Promise<PetEntity[]> {
         const pets = await this.petRepository.find({
             where: {
-                porte
+                [campo]: valor
             }
         })
         return pets;

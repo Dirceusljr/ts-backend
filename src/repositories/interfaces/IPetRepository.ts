@@ -6,5 +6,5 @@ export default interface IPetRepository {
     listaPets(): PetEntity[] | Promise<PetEntity[]>;
     atualizaPet(id: number, pet: PetEntity): Promise<{success: boolean; message?: string}> | void;
     deletaPet(id: number, pet: PetEntity): Promise<{success: boolean; message?: string}> | void;
-    buscaPetPeloPorte(porte: EnumPorte): PetEntity[] | Promise<PetEntity[]>;
+    buscaPeloCampoGenerico<T extends keyof PetEntity>(campo: T, valor: PetEntity[T]) : PetEntity[] | Promise<PetEntity[]>;
 }

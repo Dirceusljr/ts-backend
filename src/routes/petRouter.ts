@@ -18,6 +18,6 @@ router
     .put('/:id', (req, res) => petController.atualizaPet(req, res))
     .delete('/:id', (req, res) => petController.deletaPet(req, res))
     .put('/:pet_id/:adotante_id', (req, res) => petController.adotaPet(req, res))
-    .get('/filtro-porte', (req, res) => petController.buscaPetPeloPorte(req, res))
+    .get('/filtro', (req, res) => petController.buscaPetPeloCampoGenerico(req, res))
 
 export default router;
