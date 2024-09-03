@@ -1,19 +1,23 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import PetController from '../controller/PetController';
 import PetRepository from '../repositories/PetRepository';
 import { appDataSource } from '../config/dataSource';
+import { middlewarePetRequestBody } from "../middleware/validators/petRequestBody"; 
 
 const router = express.Router();
 
 const petRepository = new PetRepository(
     appDataSource.getRepository('PetEntity'),
-    appDataSource.getRepository('AdotanteEntity')    
+    appDataSource.getRepository('PetEntity')    
     );
 
 const petController = new PetController(petRepository);
 
+
+const validateBodyPet:RequestHandler = (req, res, next) => middlewarePetRequestBody(req, res, next);
+
 router
-    .post('/', (req, res) => petController.criaPet(req, res))
+    .post('/',validateBodyPet, (req, res) => petController.criaPet(req, res))
     .get('/', (req, res) => petController.listaPets(req, res))
     .put('/:id', (req, res) => petController.atualizaPet(req, res))
     .delete('/:id', (req, res) => petController.deletaPet(req, res))

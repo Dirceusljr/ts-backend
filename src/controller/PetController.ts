@@ -40,7 +40,7 @@ export default class PetController {
                 id: pet.id,
                 nome: pet.nome,
                 especie: pet.especie,
-                porte: pet.porte
+                porte: pet.porte !==null? pet.porte : undefined
             }
         })
         return res.status(200).json({dados});
