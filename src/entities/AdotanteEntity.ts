@@ -12,16 +12,16 @@ export default class AdotanteEntity {
     nome: string;
     @Column()
     senha: string;
-    @Column()
+    @Column({ unique: true })
     celular: string;
-    @Column({nullable: true})
+    @Column({ nullable: true })
     foto?: string;
-    @OneToOne(() => EnderecoEntity, {nullable: true, cascade: true, eager: true})
+    @OneToOne(() => EnderecoEntity, { nullable: true, cascade: true, eager: true })
     @JoinColumn()
     endereco?: EnderecoEntity;
     @OneToMany(() => PetEntity, (pet) => pet.adotante)
     pets!: PetEntity[]
-    
+
     constructor(
         nome: string,
         senha: string,
@@ -40,5 +40,5 @@ export default class AdotanteEntity {
     @BeforeUpdate()
     private async criptografaSenha(senha: string) {
         this.senha = criaSenhaCriptografada(this.senha);
-    } 
+    }
 }
