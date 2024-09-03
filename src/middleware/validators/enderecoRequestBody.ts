@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { NextFunction, Request, Response } from "express";
 import EnderecoEntity from "../../entities/EnderecoEntity";
 import { pt } from "yup-locale-pt";
+import tratarErroValidacaoYup from "../../utils/tratarErroValidacaoYup";
 
 yup.setLocale(pt);
 
@@ -11,19 +12,7 @@ const schemaBodyEndereco: yup.ObjectSchema<Omit<EnderecoEntity, "id">> = yup.obj
 })
 
 const middlewareEnderecoRequestBody = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            await schemaBodyEndereco.validate(req.body, { abortEarly: false });
-            next();
-        } catch (erros) {
-            const yupErrors = erros as yup.ValidationError;
-
-            const validationErrors:Record<string, string> = {};
-            yupErrors.inner.forEach((erro) => {
-                if(!erro.path) return;
-                validationErrors[erro.path] = erro.message;
-            })
-            return res.status(400).json({ erro: validationErrors });
-        }
+    tratarErroValidacaoYup(schemaBodyEndereco, req, res, next);
 }
 
 export { middlewareEnderecoRequestBody};

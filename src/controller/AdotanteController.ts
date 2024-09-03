@@ -32,43 +32,32 @@ export default class AdotanteController {
                 endereco: adotante.endereco !== null ? adotante.endereco : undefined
             }
         })
-        return res.status(200).json({dados});
+        return res.status(200).json({ dados });
     }
 
     async atualizaAdotante(req: Request<TypeRequestParamsAdotante, {}, TypeRequestBodyAdotante>, res: Response<TypeResponseBodyAdotante>) {
         const { id } = req.params;
-        const { success, message } = await this.repository.atualizarAdotante(
+        await this.repository.atualizarAdotante(
             Number(id),
             req.body as AdotanteEntity
         )
 
-        if (!success) {
-            return res.status(404).json({erros: message })
-        }
         return res.sendStatus(204)
     }
 
     async deletaAdotante(req: Request<TypeRequestParamsAdotante, {}, TypeRequestBodyAdotante>, res: Response<TypeResponseBodyAdotante>) {
         const { id } = req.params;
-        const { success, message } = await this.repository.deletarAdotante(Number(id))
-
-        if (!success) {
-            return res.status(404).json({erros: message })
-        }
+        await this.repository.deletarAdotante(Number(id))
 
         return res.sendStatus(204)
     }
 
     async atualizaEnderecoAdotante(req: Request<TypeRequestParamsAdotante, {}, EnderecoEntity>, res: Response<TypeResponseBodyAdotante>) {
         const { id } = req.params;
-        const { success, message } = await this.repository.atualizaEnderecoAdotante(
+        await this.repository.atualizaEnderecoAdotante(
             Number(id),
             req.body
         )
-
-        if (!success) {
-            return res.status(404).json({erros: message })
-        }
 
         return res.sendStatus(204)
     }

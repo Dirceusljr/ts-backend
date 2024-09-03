@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { NextFunction, Request, Response } from "express";
 import { TypeRequestBodyAdotante } from "../../types/typesAdotante";
 import { pt } from "yup-locale-pt";
+import tratarErroValidacaoYup from "../../utils/tratarErroValidacaoYup";
 
 yup.setLocale(pt);
 
@@ -13,19 +14,7 @@ const schemaBodyAdotante: yup.ObjectSchema<Omit<TypeRequestBodyAdotante, "endere
 })
 
 const middlewareAdotanteRequestBody = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            await schemaBodyAdotante.validate(req.body, { abortEarly: false });
-            next();
-        } catch (erros) {
-            const yupErrors = erros as yup.ValidationError;
-
-            const validationErrors:Record<string, string> = {};
-            yupErrors.inner.forEach((erro) => {
-                if(!erro.path) return;
-                validationErrors[erro.path] = erro.message;
-            })
-            return res.status(400).json({ erro: validationErrors });
-        }
+    tratarErroValidacaoYup(schemaBodyAdotante, req, res, next);
 }
 
 export { middlewareAdotanteRequestBody };

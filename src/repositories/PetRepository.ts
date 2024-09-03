@@ -2,7 +2,6 @@ import { Repository } from "typeorm";
 import PetEntity from "../entities/PetEntity";
 import IPetRepository from "./interfaces/IPetRepository";
 import AdotanteEntity from "../entities/AdotanteEntity";
-import EnumPorte from "../enum/EnumPorte";
 import { NaoEncontrado } from "../utils/manipulaErros";
 
 export default class PetRepository implements IPetRepository {
@@ -22,7 +21,7 @@ export default class PetRepository implements IPetRepository {
         return await this.petRepository.find();
     }
 
-    async atualizaPet(id: number, newData: PetEntity): Promise<{ success: boolean; message?: string }> {
+    async atualizaPet(id: number, newData: PetEntity) {
         const petToUpdate = await this.petRepository.findOne({
             where: {
                 id
@@ -40,7 +39,7 @@ export default class PetRepository implements IPetRepository {
         }
     }
 
-    async deletaPet(id: number): Promise<{ success: boolean; message?: string }> {
+    async deletaPet(id: number) {
         const petToRemove = await this.petRepository.findOne({
             where: {
                 id
@@ -57,7 +56,7 @@ export default class PetRepository implements IPetRepository {
         }
     }
 
-    async adotaPet(idPet: number, idAdotante: number): Promise<{ success: boolean; message?: string }> {
+    async adotaPet(idPet: number, idAdotante: number) {
         const pet = await this.petRepository.findOne({
             where: {
                 id: idPet

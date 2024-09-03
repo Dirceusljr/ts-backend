@@ -29,7 +29,7 @@ export default class AdotanteRepository implements IAdotanteRepository {
     async listarAdotantes(): Promise<AdotanteEntity[]> {
         return await this.repository.find();
     }
-    async atualizarAdotante(id: number, newData: AdotanteEntity): Promise<{ success: boolean; message?: string; }> {
+    async atualizarAdotante(id: number, newData: AdotanteEntity) {
         const adotanteToUpdate = await this.repository.findOne({
             where: {
                 id
@@ -47,7 +47,7 @@ export default class AdotanteRepository implements IAdotanteRepository {
             success: true
         }
     }
-    async deletarAdotante(id: number): Promise<{ success: boolean; message?: string; }> {
+    async deletarAdotante(id: number) {
         const adotanteToRemove = await this.repository.findOne({
             where: {
                 id
