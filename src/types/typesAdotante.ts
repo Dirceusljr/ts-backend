@@ -1,11 +1,11 @@
 import AdotanteEntity from "../entities/AdotanteEntity";
 
-type TypeRequestBodyAdotante = Omit<AdotanteEntity, "id">;
+type TypeRequestBodyAdotante = Omit<AdotanteEntity, "id" | "pets">;
 
 type TypeRequestParamsAdotante = { id?: string };
 
 type TypeResponseBodyAdotante = {
-    data?: Pick<AdotanteEntity, "id" | "nome" | "celular"> | Pick<AdotanteEntity, "id" | "nome" | "celular">[],
+    data?: Pick<AdotanteEntity, "id" | "nome" | "celular" | "endereco"> | Pick<AdotanteEntity, "id" | "nome" | "celular" | "endereco">[],
     erro?: unknown;
 }
 
