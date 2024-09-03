@@ -42,8 +42,8 @@ export default class PetRepository implements IPetRepository {
                 success: true
             }
 
-        } catch (error) {
-            console.log(error)
+        } catch (erro) {
+            console.log(erro)
             return {
                 success: false,
                 message: "Ocorreu um erro ao tentar atualizar o pet."
@@ -70,8 +70,8 @@ export default class PetRepository implements IPetRepository {
             return {
                 success: true
             }
-        } catch (error) {
-            console.log(error)
+        } catch (erro) {
+            console.log(erro)
             return {
                 success: false,
                 message: "Ocorreu um erro ao tentar excluir o pet."
@@ -112,7 +112,7 @@ export default class PetRepository implements IPetRepository {
             return {
                 success: true
             }
-        } catch (error) {
+        } catch (erro) {
             return {
                 success: false,
                 message: "Ocorreu um erro ao tentar adotar o pet."

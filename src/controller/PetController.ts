@@ -14,11 +14,11 @@ export default class PetController {
         const { nome, especie, dataDeNascimento, adotado, porte } = <PetEntity>req.body;
 
         if (!Object.values(EnumEspecie).includes(especie)) {
-            return res.status(400).json({ erro: "Espécie inválida."} );
+            return res.status(400).json({ erros: "Espécie inválida."} );
         }
 
         if (porte && !(porte in EnumPorte)) {
-            return res.status(400).json({ erro: "Porte inválido." });
+            return res.status(400).json({ erros: "Porte inválido." });
         }
 
         const novoPet = new PetEntity(
@@ -30,12 +30,12 @@ export default class PetController {
         );
 
         await this.repository.criaPet(novoPet);
-        return res.status(201).json({data: { id: novoPet.id, nome, especie, porte}});
+        return res.status(201).json({dados: { id: novoPet.id, nome, especie, porte}});
     }
 
     async listaPets(req: Request<TypeRequestParamsPet, {}, TypeRequestBodyPet>, res: Response<TypeResponseBodyPet>) {
         const listaPets = await this.repository.listaPets();
-        const data = listaPets.map((pet) => {
+        const dados = listaPets.map((pet) => {
             return {
                 id: pet.id,
                 nome: pet.nome,
@@ -43,7 +43,7 @@ export default class PetController {
                 porte: pet.porte
             }
         })
-        return res.status(200).json({data});
+        return res.status(200).json({dados});
     }
 
     async atualizaPet(req: Request<TypeRequestParamsPet, {}, TypeRequestBodyPet>, res: Response<TypeResponseBodyPet>) {
@@ -54,7 +54,7 @@ export default class PetController {
         )
 
         if (!success) {
-            return res.status(404).json({ erro: message })
+            return res.status(404).json({ erros: message })
         }
         return res.sendStatus(204)
     }
@@ -66,7 +66,7 @@ export default class PetController {
         )
 
         if (!success) {
-            return res.status(404).json({ erro: message })
+            return res.status(404).json({ erros: message })
         }
         return res.sendStatus(204)
     }
@@ -80,7 +80,7 @@ export default class PetController {
         )
 
         if (!success) {
-            return res.status(404).json({ erro: message })
+            return res.status(404).json({ erros: message })
         }
         return res.sendStatus(204)
     }

@@ -19,12 +19,12 @@ export default class AdotanteController {
         );
 
         await this.repository.criarAdotante(novoAdotante);
-        return res.status(201).json({ data: { id: novoAdotante.id, nome, celular } });
+        return res.status(201).json({ dados: { id: novoAdotante.id, nome, celular } });
     }
 
     async listaAdotantes(req: Request<TypeRequestParamsAdotante, {}, TypeRequestBodyAdotante>, res: Response<TypeResponseBodyAdotante>) {
         const listaAdotantes = await this.repository.listarAdotantes();
-        const data = listaAdotantes.map((adotante) => {
+        const dados = listaAdotantes.map((adotante) => {
             return {
                 id: adotante.id,
                 nome: adotante.nome,
@@ -32,7 +32,7 @@ export default class AdotanteController {
                 endereco: adotante.endereco !== null ? adotante.endereco : undefined
             }
         })
-        return res.status(200).json({data});
+        return res.status(200).json({dados});
     }
 
     async atualizaAdotante(req: Request<TypeRequestParamsAdotante, {}, TypeRequestBodyAdotante>, res: Response<TypeResponseBodyAdotante>) {
@@ -43,7 +43,7 @@ export default class AdotanteController {
         )
 
         if (!success) {
-            return res.status(404).json({erro: message })
+            return res.status(404).json({erros: message })
         }
         return res.sendStatus(204)
     }
@@ -53,7 +53,7 @@ export default class AdotanteController {
         const { success, message } = await this.repository.deletarAdotante(Number(id))
 
         if (!success) {
-            return res.status(404).json({erro: message })
+            return res.status(404).json({erros: message })
         }
 
         return res.sendStatus(204)
@@ -67,7 +67,7 @@ export default class AdotanteController {
         )
 
         if (!success) {
-            return res.status(404).json({erro: message })
+            return res.status(404).json({erros: message })
         }
 
         return res.sendStatus(204)

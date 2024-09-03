@@ -36,7 +36,7 @@ export default class AdotanteRepository implements IAdotanteRepository {
             return {
                 success: true
             }
-        } catch (error) {
+        } catch (erro) {
             return {
                 success: false,
                 message: 'Ocorreu um erro ao tentar atualizar o adotante'
@@ -61,8 +61,8 @@ export default class AdotanteRepository implements IAdotanteRepository {
             return {
                 success: true
             }
-        } catch (error) {
-            console.log(error)
+        } catch (erro) {
+            console.log(erro)
             return {
                 success: false,
                 message: "Ocorreu um erro ao tentar excluir o adotante."
@@ -91,7 +91,7 @@ export default class AdotanteRepository implements IAdotanteRepository {
             return {
                 success: true
             }
-        } catch (error) {
+        } catch (erro) {
             return {
                 success: false,
                 message: 'Ocorreu um erro ao tentar atualizar o endereço do adotante'

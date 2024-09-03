@@ -5,8 +5,8 @@ type TypeRequestBodyPet = Omit<PetEntity, "id">;
 type TypeRequestParamsPet = { id?: string, pet_id?: string, adotante_id?: string };
 
 type TypeResponseBodyPet = {
-    data?: Pick<PetEntity, "id" | "nome" | "especie" | "porte"> | Pick<PetEntity, "id" | "nome" | "especie" | "porte">[],
-    erro?: unknown;
+    dados?: Pick<PetEntity, "id" | "nome" | "especie" | "porte"> | Pick<PetEntity, "id" | "nome" | "especie" | "porte">[],
+    erros?: unknown;
 }
 
 export {
