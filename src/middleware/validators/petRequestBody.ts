@@ -4,6 +4,7 @@ import { TypeRequestBodyPet } from "../../types/typesPet";
 import { pt } from "yup-locale-pt";
 import EnumEspecie from "../../enum/EnumEspecie";
 import EnumPorte from "../../enum/EnumPorte";
+import tratarErroValidacaoYup from "../../utils/tratarErroValidacaoYup";
 
 yup.setLocale(pt);
 
@@ -16,19 +17,7 @@ const schemaBodyPet: yup.ObjectSchema<Omit<TypeRequestBodyPet, "adotante">> = yu
 })
 
 const middlewarePetRequestBody = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            await schemaBodyPet.validate(req.body, { abortEarly: false });
-            next();
-        } catch (erros) {
-            const yupErrors = erros as yup.ValidationError;
-
-            const validationErrors:Record<string, string> = {};
-            yupErrors.inner.forEach((erro) => {
-                if(!erro.path) return;
-                validationErrors[erro.path] = erro.message;
-            })
-            return res.status(400).json({ erro: validationErrors });
-        }
+    tratarErroValidacaoYup(schemaBodyPet, req, res, next);
 }
 
 export { middlewarePetRequestBody };

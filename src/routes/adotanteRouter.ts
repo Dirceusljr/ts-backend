@@ -4,6 +4,7 @@ import { appDataSource } from '../config/dataSource';
 import AdotanteController from '../controller/AdotanteController';
 import { middlewareAdotanteRequestBody } from '../middleware/validators/adotanteRequestBody';
 import { middlewareEnderecoRequestBody } from '../middleware/validators/enderecoRequestBody';
+import { verificaId } from '../middleware/verificaId';
 
 const router = express.Router();
 
@@ -19,8 +20,8 @@ const validateBodyEndereco:RequestHandler = (req, res, next) => middlewareEndere
 router
     .post('/', validateBodyAdotante, (req, res) => adotanteController.criaAdotante(req, res))
     .get('/', (req, res) => adotanteController.listaAdotantes(req, res))
-    .put('/:id', (req, res) => adotanteController.atualizaAdotante(req, res))
-    .delete('/:id', (req, res) => adotanteController.deletaAdotante(req, res))
-    .patch('/:id', validateBodyEndereco, (req, res) => adotanteController.atualizaEnderecoAdotante(req, res))
+    .put('/:id', verificaId, (req, res) => adotanteController.atualizaAdotante(req, res))
+    .delete('/:id', verificaId, (req, res) => adotanteController.deletaAdotante(req, res))
+    .patch('/:id', verificaId, validateBodyEndereco, (req, res) => adotanteController.atualizaEnderecoAdotante(req, res))
 
 export default router;
