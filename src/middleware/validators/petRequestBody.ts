@@ -8,12 +8,13 @@ import tratarErroValidacaoYup from "../../utils/tratarErroValidacaoYup";
 
 yup.setLocale(pt);
 
-const schemaBodyPet: yup.ObjectSchema<Omit<TypeRequestBodyPet, "adotante">> = yup.object({
+const schemaBodyPet: yup.ObjectSchema<Omit<TypeRequestBodyPet, "adotante" | "abrigo">> = yup.object({
     nome: yup.string().defined().required(),
     especie: yup.string().oneOf(Object.values(EnumEspecie)).defined().required(),
     porte: yup.string().oneOf(Object.values(EnumPorte)).defined().required(),
     dataDeNascimento: yup.date().defined().required(),
-    adotado: yup.boolean().defined().required()    
+    adotado: yup.boolean().defined().required(),
+    abrigo: yup.number().defined().required()    
 })
 
 const middlewarePetRequestBody = async (req: Request, res: Response, next: NextFunction) => {

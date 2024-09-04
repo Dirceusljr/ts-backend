@@ -3,6 +3,7 @@ import AdotanteEntity from "../entities/AdotanteEntity";
 import AdotanteRepository from "../repositories/AdotanteRepository";
 import EnderecoEntity from "../entities/EnderecoEntity";
 import { TypeRequestBodyAdotante, TypeRequestParamsAdotante, TypeResponseBodyAdotante } from "../types/typesAdotante";
+import { EnumHttpStatusCode } from "../enum/EnumHttpStatusCode";
 
 export default class AdotanteController {
     constructor(private repository: AdotanteRepository) { }
@@ -59,7 +60,7 @@ export default class AdotanteController {
             req.body
         )
 
-        return res.sendStatus(204)
+        return res.sendStatus(204);
     }
 
 }

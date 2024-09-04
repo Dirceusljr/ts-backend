@@ -15,4 +15,4 @@ const middlewareEnderecoRequestBody = async (req: Request, res: Response, next: 
     tratarErroValidacaoYup(schemaBodyEndereco, req, res, next);
 }
 
-export { middlewareEnderecoRequestBody};
+export { middlewareEnderecoRequestBody, schemaBodyEndereco};
