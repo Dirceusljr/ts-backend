@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import EnumEspecie from "../enum/EnumEspecie";
 import PetRepository from "../repositories/PetRepository";
 import PetEntity from "../entities/PetEntity";
-import EnumPorte from "../enum/EnumPorte";
 import { TypeRequestBodyPet, TypeRequestParamsPet, TypeResponseBodyPet } from "../types/typesPet";
 
 export default class PetController {
@@ -32,6 +30,7 @@ export default class PetController {
                 id: pet.id,
                 nome: pet.nome,
                 especie: pet.especie,
+                abrigo: pet.abrigo,
                 porte: pet.porte !== null ? pet.porte : undefined
             }
         })
@@ -77,7 +76,8 @@ export default class PetController {
                 especie: pet.especie,
                 porte: pet.porte !== null ? pet.porte : undefined,
                 adotado: pet.adotado,
-                dataDeNascimento: pet.dataDeNascimento
+                dataDeNascimento: pet.dataDeNascimento,
+                abrigo: pet.abrigo
             }
         })
         return res.status(200).json(dados);

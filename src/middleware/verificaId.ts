@@ -9,4 +9,5 @@ export const verificaId = (req: Request, res: Response, next: NextFunction) => {
             throw new RequisicaoRuim(`O parâmetro ${param} deve ser um número inteiro.`);
         }
     }
+    return next();
 }
